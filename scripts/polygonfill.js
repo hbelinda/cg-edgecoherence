@@ -14,6 +14,10 @@ var polygons = {
     concave: {
         color: '#85b8d6', // choose color here!
         vertices: [
+            {x: 220, y: 260},
+            {x: 250, y: 220},
+            {x: 290, y: 280},
+            {x: 260, y: 240}
             // fill in vertices here!
         ]
     },
@@ -31,6 +35,11 @@ var polygons = {
     interior_hole: {
         color: '#dcd1e3', // choose color here!
         vertices: [
+            {x: 320, y: 320},
+            {x: 380, y: 390},
+            {x: 300, y: 380},
+            {x: 360, y: 340},
+            {x: 340, y: 420}
             // fill in vertices here!
         ]
     }
