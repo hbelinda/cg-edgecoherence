@@ -4,6 +4,10 @@ var polygons = {
     convex: {
         color: '#ed9fab', // choose color here!
         vertices: [
+            {x: 120, y: 150},
+            {x: 150, y: 120},
+            {x: 170, y: 150},
+            {x: 140, y: 180}
             // fill in vertices here!
         ]
     },
@@ -16,6 +20,11 @@ var polygons = {
     self_intersect: {
         color: '#c5ebcb', // choose color here!
         vertices: [
+            {x: 20, y: 50},
+            {x: 50, y: 20},
+            {x: 90, y: 80},
+            {x: 90, y: 40},
+            {x: 40, y: 80}
             // fill in vertices here!
         ]
     },
