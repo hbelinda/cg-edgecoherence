@@ -2,25 +2,25 @@ var view;
 var ctx;
 var polygons = {
     convex: {
-        color: '', // choose color here!
+        color: '#ed9fab', // choose color here!
         vertices: [
             // fill in vertices here!
         ]
     },
     concave: {
-        color: '', // choose color here!
+        color: '#85b8d6', // choose color here!
         vertices: [
             // fill in vertices here!
         ]
     },
     self_intersect: {
-        color: '', // choose color here!
+        color: '#c5ebcb', // choose color here!
         vertices: [
             // fill in vertices here!
         ]
     },
     interior_hole: {
-        color: '', // choose color here!
+        color: '#dcd1e3', // choose color here!
         vertices: [
             // fill in vertices here!
         ]
