@@ -16,8 +16,10 @@ var polygons = {
         vertices: [
             {x: 220, y: 260},
             {x: 250, y: 220},
+            {x: 280, y: 230},
             {x: 290, y: 280},
-            {x: 260, y: 240}
+            {x: 250, y: 250}
+
             // fill in vertices here!
         ]
     },
@@ -78,19 +80,100 @@ function DrawPolygon(polygon) {
 
 
     // Step 1: populate ET with edges of polygon
+    for(i = 0; i < polygon.vertices.length; i++){
+        var ymax;
+        var ymin;
+        var xmin;
+        var deltaX;
+        var deltaY;
+//      console.log("hello " + polygon.vertices[i].x + " " + polygon.vertices[i].y);
+//      console.log(edge_table[1]);
+        if(polygon.vertices[i].y > polygon.vertices[(i+1)%polygon.vertices.length].y){
+            ymax = polygon.vertices[i].y;
+            ymin = polygon.vertices[(i+1)%polygon.vertices.length].y;
+            xmin = polygon.vertices[(i+1)%polygon.vertices.length].x;
+        }
+        else {
+            ymax = polygon.vertices[(i+1)%polygon.vertices.length].y;
+            ymin = polygon.vertices[i].y;
+            xmin = polygon.vertices[i].x;
+        }
+        deltaX = polygon.vertices[i].x - polygon.vertices[(i+1)%polygon.vertices.length].x;
+        deltaY = polygon.vertices[i].y - polygon.vertices[(i+1)%polygon.vertices.length].y;
+//        console.log(ymin);
+//        console.log(edge_table[ymin]);
+      edge_table[ymin].InsertEdge(new EdgeEntry(ymax, xmin, deltaX, deltaY));
+    }
 
+    console.log(edge_table);
 
     // Step 2: set y to first scan line with an entry in ET
-
+    var y;
+    var j=0;
+    while(edge_table[j].first_entry === null)
+    {
+        //console.log(edge_table[j]);
+        if (edge_table[j+1].first_entry !== null){ y = j+1; }
+        j++;
+    }
+    console.log("y is: " + y);
 
     // Step 3: Repeat until ET[y] is NULL and AL is NULL
-    //   a) Move all entries at ET[y] into AL
-    //   b) Sort AL to maintain ascending x-value order
-    //   c) Remove entries from AL whose ymax equals y
-    //   d) Draw horizontal line for each span (pairs of entries in the AL)
-    //   e) Increment y by 1
-    //   f) Update x-values for all remaining entries in the AL (increment by 1/m)
-}
+    while(edge_table[y].first_entry !== null || active_list.first_entry !== null) {
+        //   a) Move all entries at ET[y] into AL
+        console.log("y: " + y);
+        var current = edge_table[y].first_entry;
+        if(current !== null ) {
+            active_list.InsertEdge(current);
+            console.log("added new edge: ");
+            console.log(active_list.first_entry);
+        }
+
+        while(current !== null && current.next_entry !== null){
+            active_list.InsertEdge(current.next_entry);
+            current = current.next_entry;
+            console.log("added another new edge: ");
+            console.log(active_list.first_entry);
+        }
+
+    //    console.log("moved entries into ET: " + active_list.first_entry);
+//        console.log(active_list.first_entry);
+
+        //   b) Sort AL to maintain ascending x-value order
+        active_list.SortList();
+//        console.log("active sorted :");
+//        console.log(active_list.first_entry);
+        //   c) Remove entries from AL whose ymax equals y
+        active_list.RemoveCompleteEdges(y);
+//        console.log("active after: ");
+//        console.log(active_list.first_entry);
+
+//    console.log("removed from AL: " + active_list.first_entry);
+        //   d) Draw horizontal line for each span (pairs of entries in the AL)
+        current = active_list.first_entry;
+
+        while(current !== null){
+            var x1 = Math.ceil(current.x);
+            var x2 = Math.ceil(current.next_entry.x) -1;
+            if(x1 <= x2){
+                DrawLine(x1 , y, x2, y);
+            }
+            current = current.next_entry.next_entry;
+        }
+        //   e) Increment y by 1
+        y++;
+        //   f) Update x-values for all remaining entries in the AL (increment by 1/m)
+        current = active_list.first_entry;
+        while(current !== null)
+        {
+//            console.log(current.x);
+            current.x = current.x + current.inv_slope;
+            current = current.next_entry;
+        }
+//        console.log(active_list);
+
+   }//while
+}//Draw Polygon
 
 // SelectNewPolygon(): triggered when new selection in drop down menu is made
 function SelectNewPolygon() {
