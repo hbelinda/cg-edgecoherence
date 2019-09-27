@@ -116,7 +116,7 @@ function DrawPolygon(polygon) {
         if (edge_table[j+1].first_entry !== null){ y = j+1; }
         j++;
     }
-    console.log("y is: " + y);
+//    console.log("y is: " + y);
 
     // Step 3: Repeat until ET[y] is NULL and AL is NULL
     while(edge_table[y].first_entry !== null || active_list.first_entry !== null) {
@@ -125,15 +125,15 @@ function DrawPolygon(polygon) {
         var current = edge_table[y].first_entry;
         if(current !== null ) {
             active_list.InsertEdge(current);
-            console.log("added new edge: ");
-            console.log(active_list.first_entry);
+ //           console.log("added new edge: ");
+//            console.log(active_list.first_entry);
         }
 
         while(current !== null && current.next_entry !== null){
             active_list.InsertEdge(current.next_entry);
             current = current.next_entry;
-            console.log("added another new edge: ");
-            console.log(active_list.first_entry);
+//            console.log("added another new edge: ");
+//            console.log(active_list.first_entry);
         }
 
     //    console.log("moved entries into ET: " + active_list.first_entry);
