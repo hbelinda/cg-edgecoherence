@@ -92,17 +92,22 @@ function DrawPolygon(polygon) {
             ymax = polygon.vertices[i].y;
             ymin = polygon.vertices[(i+1)%polygon.vertices.length].y;
             xmin = polygon.vertices[(i+1)%polygon.vertices.length].x;
+            deltaX = polygon.vertices[i].x - polygon.vertices[(i+1)%polygon.vertices.length].x;
+            deltaY = polygon.vertices[i].y - polygon.vertices[(i+1)%polygon.vertices.length].y;
+            edge_table[ymin].InsertEdge(new EdgeEntry(ymax, xmin, deltaX, deltaY));
         }
-        else {
+        else if (polygon.vertices[i].y < polygon.vertices[(i+1)%polygon.vertices.length].y) {
             ymax = polygon.vertices[(i+1)%polygon.vertices.length].y;
             ymin = polygon.vertices[i].y;
             xmin = polygon.vertices[i].x;
+            deltaX = polygon.vertices[i].x - polygon.vertices[(i+1)%polygon.vertices.length].x;
+            deltaY = polygon.vertices[i].y - polygon.vertices[(i+1)%polygon.vertices.length].y;
+            edge_table[ymin].InsertEdge(new EdgeEntry(ymax, xmin, deltaX, deltaY));
         }
-        deltaX = polygon.vertices[i].x - polygon.vertices[(i+1)%polygon.vertices.length].x;
-        deltaY = polygon.vertices[i].y - polygon.vertices[(i+1)%polygon.vertices.length].y;
+        
 //        console.log(ymin);
 //        console.log(edge_table[ymin]);
-      edge_table[ymin].InsertEdge(new EdgeEntry(ymax, xmin, deltaX, deltaY));
+        
     }
 
     console.log(edge_table);
